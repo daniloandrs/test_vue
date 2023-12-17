@@ -1,14 +1,19 @@
 import axios from 'axios'
 import { HttpErrorHandler } from './http-error-handler'
 import { ObjectPathResolver } from '@/util/object-path-resolver'
-import { useStore } from '@/app/store'
-const store = useStore()
+
+const currentProtocol = window.location.protocol;
+
+let proxy = ''
+if (currentProtocol === 'https:') {
+  proxy = 'https://cors-anywhere.herokuapp.com/'
+}
 
 const HTTP = axios.create({
-  baseURL: "http://bun-burn-env.eba-ftyx2m3h.us-east-1.elasticbeanstalk.com",
-  headers: { 
+  baseURL: proxy + "http://bun-burn-env.eba-ftyx2m3h.us-east-1.elasticbeanstalk.com",
+  headers: {
     'Content-type': 'application/json',
-    "Authorization" : "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Indpbmdlcmxpb24uY3VscWkiLCJleHAiOjE3MDY5NDIxNjR9.j7_UICJFBvPiHv_bhnoRNprVU_DaML41Vjmd51jcRDI"
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Indpbmdlcmxpb24uY3VscWkiLCJleHAiOjE3MDY5NDIxNjR9.j7_UICJFBvPiHv_bhnoRNprVU_DaML41Vjmd51jcRDI"
   }
 })
 

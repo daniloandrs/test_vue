@@ -6,29 +6,29 @@ export class PaymentService {
     static async getCurrentBalance() {
         const response = await HTTP.get<CurrentBalance, ResponseBody<CurrentBalance>>(
             `/getActualBalance`
-          )
-          return response.data 
+        )
+        return response.data
     }
 
     static async getProviders() {
         const response = await HTTP.get<ListProviders, ResponseBody<ListProviders>>(
             `/getProviders`
-          )
-          return response.data 
+        )
+        return response.data
     }
 }
 
 
-export interface CurrentBalance { 
-    balanceCommerce:string
+export interface CurrentBalance {
+    balanceCommerce: string
 }
 
 export type ListProviders = {
-    companies : Array<Company>
+    companies: Array<Company>
 }
 
-export interface Company  {
+export interface Company {
     company: string
-    _id:string,
+    _id: string,
     image: string
 }
