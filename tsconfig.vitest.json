@@ -3,7 +3,12 @@
   "exclude": [],
   "compilerOptions": {
     "composite": true,
-    "lib": [],
-    "types": ["node", "jsdom"]
+    "lib": [
+      "WebWorker"
+    ],
+    "types": [
+      "node",
+      "jsdom"
+    ]
   }
 }

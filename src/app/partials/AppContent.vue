@@ -5,11 +5,8 @@
     <main
       style="
         position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
         overflow-y: auto;
+        width: 100%;
       "
       :style="{
         'background-color': 'white'

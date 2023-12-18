@@ -4,8 +4,10 @@ import { ref } from 'vue';
 import { PaymentService } from '@/services/payments.service';
 import { onMounted } from 'vue';
 import { useStore } from '@/app/store';
-
+import { mdiInformationSlabCircleOutline,mdiSync, mdiHeartOutline,mdiCellphone, mdiLightbulbVariantOutline,mdiCalendarRange } from '@mdi/js';
+import { useRouter } from 'vue-router';
 const store = useStore()
+const router = useRouter()
 const loading = ref(false)
 const ballancedCard = ref<number | null>(null)
 const options = ref<{
@@ -17,19 +19,19 @@ const options = ref<{
   {
     id: 1,
     name: 'Recargas',
-    icon: 'mdi-cellphone',
+    icon: mdiCellphone,
     path: 'recharge'
   },
   {
     id: 2,
     name: 'Pagos y Servicios',
-    icon: 'mdi-lightbulb-variant-outline',
+    icon:mdiLightbulbVariantOutline,
     path: 'recharge'
   },
   {
     id: 1,
     name: 'Historial de ganancias y operaciones',
-    icon: 'mdi-calendar-range',
+    icon:mdiCalendarRange,
     path: 'recharge'
   }
 ])
@@ -48,6 +50,11 @@ const getCurrentBalance = async () => {
   }
 }
 
+const to = (namePath: string) => {
+  router.push({
+    path:namePath
+  })
+}
 
 onMounted(async () => {
   store.navbar = {
@@ -60,55 +67,64 @@ onMounted(async () => {
 
 <template>
   <ContentScaffold>
-    <v-row class="align-center">
-      <v-col cols="12" class="pb-0 mb-0">
-        <span class="font-weight-medium text-grey-darken-1">
+    <div class="align-center mx-4">
+      <div class="pb-0 mb-0 flex items-center content-center">
+        <span class="font-weight-medium text-gray-700 font-semibold">
           Saldo Virtual
         </span>
-        <v-btn icon variant="text">
-          <v-icon color="light-blue-accent-3">mdi-information-slab-circle-outline</v-icon>
-        </v-btn>
-      </v-col>
-      <v-col cols="12" class="pt-0 mt-0">
-        <v-skeleton-loader boilerplate type="text" width="200" v-if="loading"></v-skeleton-loader>
-        <template v-else>
-          <span class="text-h4 font-weight-bold">
-            S/ {{ ballancedCard }}
-          </span>
-          <v-btn icon variant="text" @click="getCurrentBalance">
-            <v-icon color="light-blue-accent-3">mdi-sync</v-icon>
-          </v-btn>
+        <button type="button" 
+          class="text-blue-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 ">
+              <svg-icon type="mdi" :path="mdiInformationSlabCircleOutline"></svg-icon>
+          </button>
+      </div>
+      <div  class="pt-0 mt-0 flex items-center content-center">
+        <template v-if="loading">
+          <div role="status" class="max-w-sm animate-pulse">
+              <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
+              <span class="sr-only">Loading...</span>
+          </div>
         </template>
-      </v-col>
-      <v-col cols="12">
-        <v-btn color="grey-darken-1" rounded="xl" variant="outlined">
-          ¿Cómo cargar mi saldo virtual?
-        </v-btn>
-      </v-col>
-      <v-col cols="12">
-        <span class="font-weight-medium text-grey-darken-1">
+        <template v-else>
+          <h2 class="text-3xl font-bold">
+            S/ {{ ballancedCard }}
+          </h2>
+           <button type="button" 
+            @click="getCurrentBalance()"
+          class="text-blue-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 ">
+              <svg-icon type="mdi" :path="mdiSync"></svg-icon>
+          </button>
+        </template>
+      </div>
+      <div  class="pt-2  pb-2 mt-0">
+        <button type="button" class="inline-flex items-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 ">
+          <svg-icon type="mdi" :path="mdiHeartOutline"></svg-icon> ¿Cómo cargar mi saldo virtual?
+        </button>
+      </div>
+      <div>
+        <span  class="font-weight-medium text-gray-700 font-semibold">
           Código para cargar tu saldo:
         </span>
-        <span class="font-weight-medium text-light-blue-accent-3">
+        <span  class="font-weight-medium text-blue-500 font-semibold">
           {12345678901}
         </span>
-      </v-col>
-      <v-col cols="12">
-        <v-divider></v-divider>
-      </v-col>
-      <v-col cols="12">
-        <v-card class="mx-auto mb-2" width="350" 
-        variant="tonal"
-        :to="item.path"
-        v-for="(item) in options">
-        <template v-slot:prepend>
-          <v-icon :icon="item.icon" color="orange-accent-4"></v-icon>
-        </template>
-          <template v-slot:subtitle>
-            {{ item.name }}
-          </template>
-        </v-card>
-      </v-col>
-    </v-row>
+      </div>
+      
+      <hr class="my-4" />
+
+      <div>
+        
+        <div class="w-full text-gray-900 bg-white  ">
+            <button type="button"
+              @click="to(item.path)"
+               v-for="(item) in options"
+            class="relative inline-flex items-center w-full px-4 py-4 
+              bg-gray-100
+              my-2
+            text-sm font-medium border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 ">
+                 <svg-icon type="mdi" class="text-yellow-600" :path="item.icon"></svg-icon>&nbsp; {{ item.name }}
+            </button>
+        </div>
+      </div>
+    </div>
   </ContentScaffold>
 </template>

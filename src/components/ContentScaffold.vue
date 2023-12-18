@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <v-container>
+  <div class="container mx-auto">
     <div class="my-4" style="color: var(--primary-blue-color)">
       <h1 class="my-0 mb-0 font-weight-medium">
         <slot name="title"></slot>
@@ -11,5 +11,5 @@
       </p>
     </div>
     <slot></slot>
-  </v-container>
+  </div>
 </template>

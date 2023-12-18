@@ -1,13 +1,10 @@
 import { AxiosError } from 'axios'
 import { ObjectPathResolver } from '../util/object-path-resolver'
-import { useRouter } from 'vue-router';
-import router from '../app/router';
+import router from '@/app/router'
 
 export class HttpErrorHandler {
 
-  router =  useRouter()
   axios(error: any): void {
-    console.log({error})
     if (error instanceof AxiosError) {
       const response = error.response
       if (response === undefined) {
@@ -15,9 +12,9 @@ export class HttpErrorHandler {
       }
 
       let message = response.statusText
-      if(response.status === 401) {
+      if (response.status === 401) {
         router.push({
-          name:'Unauthorized'
+          name: 'Unauthorized'
         })
       }
       if (response.status === 404) {

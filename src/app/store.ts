@@ -3,8 +3,8 @@ import { defineStore } from "pinia"
 export type StoreState = {
   isLoading: boolean
   appIsMounted: boolean
-  token: string|null
-  navbar :Navbar
+  token: string | null
+  navbar: Navbar
 }
 
 export type FixedStoreDefinition = {
@@ -17,8 +17,8 @@ export const useStore = defineStore('session-store', {
       isLoading: false,
       appIsMounted: false,
       token: localStorage.getItem('token'),
-      navbar : {
-        title:''
+      navbar: {
+        title: ''
       }
     }
   }
@@ -26,5 +26,5 @@ export const useStore = defineStore('session-store', {
 
 
 export type Navbar = {
-  title : string
+  title: string
 }
